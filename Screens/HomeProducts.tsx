@@ -13,21 +13,26 @@ import Colors from './../Colors';
 import fireDB from '../firebase/Firebase';
 
 const HomeProducts = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
   useEffect(() => {
-    // const fetchData = async () => {
-    //   const result = await axios.get('https://dummyjson.com/products');
-    //   setData(result.data.products);
-    // };
-    // fetchData();
-    fireDB.child('goat-test').on('value', snapshot => {
-      if (snapshot.val() !== null) {
-        setData({...snapshot.val()});
-      } else {
-        setData({});
-      }
-    });
+    getData();
   }, []);
+
+  const getData = async () => {
+    // fireDB.child('goat-test').on('value', snapshot => {
+    //   if (snapshot.val() !== null) {
+    //     setData({...snapshot.val()});
+    //   } else {
+    //     setData({});
+    //   }
+    // });
+    await fetch('https://fakestoreapi.com/products')
+      .then(res => res.json())
+      .then(json => setData(json))
+      .catch(err => console.log(err));
+  };
+
+  console.log(data);
 
   return (
     <ScrollView flex={1} showsVerticalScrollIndicator={false}>
@@ -36,10 +41,10 @@ const HomeProducts = () => {
         direction="row"
         justifyContent={'space-between'}
         px={6}>
-        {/* {data.map((product: any) => (
+        {data.map((product: any) => (
           <Pressable
             key={product.id}
-            w="100%"
+            w="47%"
             bg={Colors.white}
             rounded="md"
             shadow={2}
@@ -48,11 +53,11 @@ const HomeProducts = () => {
             pb={2}
             overflow="hidden">
             <Image
-              source={{uri: product.thumbnail}}
+              source={{uri: product.image}}
               alt={'image'}
               w="full"
               h={24}
-              resizeMode="cover"
+              resizeMode="contain"
             />
             <Box px={4} pt={1}>
               <Heading size="sm" bold>
@@ -63,7 +68,7 @@ const HomeProducts = () => {
               </Text>
             </Box>
           </Pressable>
-        ))} */}
+        ))}
 
         {Object.keys(data).map(item => console.warn(item))}
       </Flex>

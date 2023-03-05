@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@react-native-firebase/app": "^16.5.2",
+    "@react-native-firebase/app": "^16.7.0",
     "axios": "^1.2.4",
     "firebase": "^9.15.0",
     "native-base": "^3.4.25",
